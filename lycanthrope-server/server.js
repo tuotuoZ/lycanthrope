@@ -6,9 +6,13 @@ var db = mongoose.connect('mongodb://localhost/lycanthrope');
 
 var Role = require('./model/role');
 
+var cors = require('cors');
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-
+// Use cors package to overcome the access-origin-control problem
+app.use(cors());
 
 //Return all roles information for debugging
 app.get('/roles', function(req, res) {
@@ -23,7 +27,7 @@ app.get('/roles', function(req, res) {
 
 
 //When user picked a role, send the userID and role to the database
-app.put('/role', function(req, res){
+app.put('/addRole', function(req, res){
     var newRole = new Role();
     newRole.userID = req.body.userID;
     newRole.userRole = req.body.userRole;
