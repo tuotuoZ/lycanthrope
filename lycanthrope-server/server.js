@@ -9,7 +9,21 @@ var Role = require('./model/role');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.post('/role', function(req, res){
+
+//Return all roles information for debugging
+app.get('/roles', function(req, res) {
+    Role.find({}, function(err, roles) {
+        if (err) {
+            res.status(500).send({error: "Could not find the role information!"})
+        } else {
+            res.send(roles)
+        }
+    });
+});
+
+
+//When user picked a role, send the userID and role to the database
+app.put('/role', function(req, res){
     var newRole = new Role();
     newRole.userID = req.body.userID;
     newRole.userRole = req.body.userRole;
@@ -23,29 +37,39 @@ app.post('/role', function(req, res){
     });
 });
 
-app.get('/roles', function(req, res) {
-    Role.find({}, function(err, roles) {
-        if (err) {
-            res.status(500).send({error: "Could not find the role information!"})
-        } else {
-            res.send(roles)
-        }
-    });
-});
 
-// Return the user information
-app.put('/role/find', function(req, res) {
+
+// Return the user information for ability users,right now it's only for seer
+app.post('/role/find', function(req, res) {
     Role.findOne({"userID": req.body.userID}, function(err, roleNeed) {
         if (err) {
             res.status(500).send({error: "Could not find the role information!"})
         } else {
-            res.send(roleNeed);
+            res.send(roleNeed.userSide);
         }
     });
 });
 
-// Change the user status, werewolf's ability
-app.put('/role/action', function(req, res) {
+// Kill one player(user), werewolf's and witch's ability
+app.post('/role/kill', function(req, res) {
+    Role.update({"userID": req.body.userID}, {"userStatus": "dead"}, function(err) {
+        if (err) {
+            res.status(500).send({error:"Cound not update the user status!"});
+        } else {
+            Role.findOne({"userID": req.body.userID}, function(err, roleToReturn) {
+                if (err) {
+                    res.status(500).send({error:"Could not find the user information"});
+                } else {
+                    res.send(roleToReturn);
+                }
+            });
+        }
+
+    });
+});
+
+// Revive one player(user), if the player is killed by werewolf.
+app.post('/role/revive', function(req, res) {
     Role.update({"userID": req.body.userID}, {"userStatus": "live"}, function(err) {
         if (err) {
             res.status(500).send({error:"Cound not update the user status!"});
@@ -58,10 +82,11 @@ app.put('/role/action', function(req, res) {
                 }
             });
         }
-                
+
     });
 });
 
-app.listen(3000, function(){
+//Port 3000 is reserved for react frontend
+app.listen(3004, function(){
     console.log("狼人已经偷偷潜入了村庄......")
 });

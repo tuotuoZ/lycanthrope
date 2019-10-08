@@ -1,0 +1,8 @@
+db.roles.insert({"userID": 1, "userRole": "villager", "userSide": "good", "userStatus": "live"})
+db.roles.insert({"userID": 2, "userRole": "villager", "userSide": "good", "userStatus": "live"})
+db.roles.insert({"userID": 3, "userRole": "villager", "userSide": "good", "userStatus": "live"})
+db.roles.insert({"userID": 4, "userRole": "villager", "userSide": "good", "userStatus": "live"})
+db.roles.insert({"userID": 5, "userRole": "werewolf", "userSide": "bad", "userStatus": "live"})
+db.roles.insert({"userID": 6, "userRole": "werewolf", "userSide": "bad", "userStatus": "live"})
+db.roles.insert({"userID": 7, "userRole": "werewolf", "userSide": "bad", "userStatus": "live"})
+db.roles.insert({"userID": 8, "userRole": "werewolf", "userSide": "bad", "userStatus": "live"})
