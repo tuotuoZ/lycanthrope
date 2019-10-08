@@ -5,7 +5,8 @@ var role = new Schema({
     userID: Number,
     userRole: String,
     userSide: String,
-    userStatus: {type: String, default: "live"}
+    userStatus: {type: String, default: "live"},
+    userGuard: {type: Boolean, default: false}
 });
 
 module.exports = mongoose.model('Role', role);
