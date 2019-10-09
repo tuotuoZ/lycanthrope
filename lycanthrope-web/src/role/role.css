@@ -1,0 +1,9 @@
+.role {
+  width: 20rem;
+}
+
+.role img {
+  max-height: 80rem;
+  max-width: 10rem;
+  align-self: center;
+}

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import HttpService from '../services/http-service';
+import Role from '../role/role';
+
+
 import hunter  from './imgs/hunter.jpg';
 import seer  from './imgs/seer.jpg';
 import werewolf  from './imgs/werewolf.jpg';
@@ -16,12 +19,36 @@ class App extends Component {
 
   constructor(props){
     super(props);
-    http.getRoles();
-    var req = require.context("./imgs", false, /.*\.jpg$/);
-    req.keys().forEach(function(key){
-        req(key);
+
+    this.state = {roles: []};
+
+    //Bind functions
+    this.loadData = this.loadData.bind(this);
+    this.roleList = this.roleList.bind(this);
+
+
+    this.loadData();
+  }
+
+  loadData = () => {
+    var self = this;
+    //Scope
+
+    http.getRoles().then(data => {
+      self.setState({roles: data})
+    }, err => {
+
     });
-    console.log(req);
+  }
+
+  roleList = () => {
+    const list = this.state.roles.map((role) =>
+      <div className="col-sm-4" key={role._id}>
+        <Role name={role.userRole} imgUrl={role.imgUrl}></Role>
+      </div>
+    );
+
+    return (list);
   }
 
   render() {
@@ -29,31 +56,15 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>欢迎来到Hampshire College狼人杀</h2>
+          <h2>欢迎来到</h2>
+          <h2>Hampshire College</h2>
+          <h2>狼人杀官方APP</h2>
         </div>
 
-        <div className="container-fluid App-main">
+        <div className="container App-main">
           <h3>选择你的角色</h3>
           <div className="row">
-				        <div className="col-sm-8">
-				  	           <div className="row">
-                         <div className="col-sm-4">
-                           <button class="btn btn-default">
-                             <img src={hunter} alt="Hunter" width="150"></img>
-                           </button>
-                           <button class="btn btn-default">
-                             <img src={seer} alt="Hunter" width="150"></img>
-                           </button>
-                           <button class="btn btn-default">
-                             <img src={werewolf} alt="Hunter" width="150"></img>
-                           </button>
-                           <button class="btn btn-default">
-                             <img src={villager} alt="Hunter" width="150"></img>
-                           </button>
-                         </div>
-
-					             </div>
-				        </div>
+            {this.roleList()}
           </div>
         </div>
       </div>

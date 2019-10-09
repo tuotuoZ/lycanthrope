@@ -10,3 +10,11 @@ Lycanthrope is a web application that helps small group of people who want to pl
 
 ### How to use
 TBD
+
+
+### Technical issue
+1. The role images are imported miscellaneously. Looking for better way to use local images.
+2. Understand bind in react and ES6
+3. ![bootstrap](https://getbootstrap.com/docs/4.3/components/card/) documentation
+4. JavaScript map function documentation
+5. 153 9:25 promise, self ,this.
