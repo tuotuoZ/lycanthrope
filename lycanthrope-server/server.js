@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var db = mongoose.connect('mongodb://localhost/lycanthrope');
 
 var Role = require('./model/role');
+var Player = require('./model/player');
 
 var cors = require('cors');
 
@@ -18,25 +19,34 @@ app.use(cors());
 app.get('/roles', function(req, res) {
     Role.find({}, function(err, roles) {
         if (err) {
-            res.status(500).send({error: "Could not find the role information!"})
+            res.status(500).send({error: "Could not find the role information!"});
         } else {
-            res.send(roles)
+            res.send(roles);
         }
     });
 });
 
+app.get('/players', function(req, res) {
+    Player.find({}, function(err, roles) {
+        if (err) {
+            res.status(500).send({error: "Could not find the role information!"});
+        } else {
+            res.send(roles);
+        }
+    });
+});
 
 //When user picked a role, send the userID and role to the database
-app.put('/addRole', function(req, res){
-    var newRole = new Role();
-    newRole.userID = req.body.userID;
-    newRole.userRole = req.body.userRole;
-    newRole.userSide = req.body.userSide;
-    newRole.save(function(err, savedRole){
+app.put('/addPlayer', function(req, res){
+    var newPlayer = new Player();
+    newPlayer.userID = req.body.userID;
+    newPlayer.userRole = req.body.userRole;
+    newPlayer.userSide = req.body.userSide;
+    newPlayer.save(function(err, savedPlayer){
         if (err) {
-            res.status(500).send({err:"Could not add the role!"});
+            res.status(500).send({err:"Could not add the Player!"});
         }else {
-            res.status(200).send(savedRole);
+            res.status(200).send(savedPlayer);
         }
     });
 });
@@ -44,27 +54,30 @@ app.put('/addRole', function(req, res){
 
 
 // Return the user information for ability users,right now it's only for seer
-app.post('/role/find', function(req, res) {
-    Role.findOne({"userID": req.body.userID}, function(err, roleNeed) {
+app.post('/player/find', function(req, res) {
+  console.log(req.body.userID);
+    Player.findOne({"userID": req.body.userID}, function(err, roleNeed) {
         if (err) {
-            res.status(500).send({error: "Could not find the role information!"})
+            res.status(500).send({error: "Could not find the role information!"});
         } else {
-            res.send(roleNeed.userSide);
+            console.log(roleNeed);
+            res.send(roleNeed);
         }
     });
 });
 
 // Kill one player(user), werewolf's and witch's ability
-app.post('/role/kill', function(req, res) {
-    Role.update({"userID": req.body.userID}, {"userStatus": "dead"}, function(err) {
+app.post('/player/kill', function(req, res) {
+  console.log(req.body);
+    Player.updateOne({"userID": req.body.userID}, {"userStatus": "dead"}, function(err) {
         if (err) {
             res.status(500).send({error:"Cound not update the user status!"});
         } else {
-            Role.findOne({"userID": req.body.userID}, function(err, roleToReturn) {
+            Player.findOne({"userID": req.body.userID}, function(err, playerToReturn) {
                 if (err) {
                     res.status(500).send({error:"Could not find the user information"});
                 } else {
-                    res.send(roleToReturn);
+                    res.send(playerToReturn);
                 }
             });
         }
@@ -73,16 +86,16 @@ app.post('/role/kill', function(req, res) {
 });
 
 // Revive one player(user), if the player is killed by werewolf.
-app.post('/role/revive', function(req, res) {
+app.post('/player/revive', function(req, res) {
     Role.update({"userID": req.body.userID}, {"userStatus": "live"}, function(err) {
         if (err) {
             res.status(500).send({error:"Cound not update the user status!"});
         } else {
-            Role.findOne({"userID": req.body.userID}, function(err, roleToReturn) {
+            Player.findOne({"userID": req.body.userID}, function(err, playerToReturn) {
                 if (err) {
                     res.status(500).send({error:"Could not find the user information"});
                 } else {
-                    res.send(roleToReturn);
+                    res.send(playerToReturn);
                 }
             });
         }
@@ -91,16 +104,16 @@ app.post('/role/revive', function(req, res) {
 });
 
 // Guard one player(user) for tonight
-app.post('/role/guard', function(req, res) {
-    Role.update({"userID": req.body.userID}, {"userGuard": true}, function(err) {
+app.post('/player/guard', function(req, res) {
+    Player.update({"userID": req.body.userID}, {"userGuard": true}, function(err) {
         if (err) {
             res.status(500).send({error:"Cound not update the user status!"});
         } else {
-            Role.findOne({"userID": req.body.userID}, function(err, roleToReturn) {
+            Player.findOne({"userID": req.body.userID}, function(err, playerToReturn) {
                 if (err) {
                     res.status(500).send({error:"Could not find the user information"});
                 } else {
-                    res.send(roleToReturn);
+                    res.send(playerToReturn);
                 }
             });
         }
@@ -109,16 +122,16 @@ app.post('/role/guard', function(req, res) {
 });
 
 // Last player to act will unguard the player who has been guarded
-app.post('/role/unguard', function(req, res) {
-    Role.update({"userID": req.body.userID}, {"userGuard": false}, function(err) {
+app.post('/player/unguard', function(req, res) {
+    Player.update({"userID": req.body.userID}, {"userGuard": false}, function(err) {
         if (err) {
             res.status(500).send({error:"Cound not update the user status!"});
         } else {
-            Role.findOne({"userID": req.body.userID}, function(err, roleToReturn) {
+            Player.findOne({"userID": req.body.userID}, function(err, playerToReturn) {
                 if (err) {
                     res.status(500).send({error:"Could not find the user information"});
                 } else {
-                    res.send(roleToReturn);
+                    res.send(playerToReturn);
                 }
             });
         }

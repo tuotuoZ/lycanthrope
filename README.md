@@ -5,6 +5,7 @@ Lycanthrope is a web application that helps small group of people who want to pl
 ### User stories
 
 -[x] Werewolf can kill a character.
+-[x] Seer can find other players' sides.
 -[ ] TBD
 
 
@@ -18,3 +19,4 @@ TBD
 3. ![bootstrap](https://getbootstrap.com/docs/4.3/components/card/) documentation
 4. JavaScript map function documentation
 5. 153 9:25 promise, self ,this.
+6. http-service.js Having problem setting up the http-service http address to server.js.
