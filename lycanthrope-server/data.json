@@ -1,6 +1,7 @@
 db.roles.insert({"userID": 1, "userRole": "villager", "imgUrl": "http://langrensha.com/imgs/heros/pingmin.png", "userSide": "good", "userStatus": "live"})
-db.game.insert({"userID": 8, "userRole": "werewolf", "imgUrl": "http://langrensha.com/imgs/heros/langren.png","userSide": "bad", "userStatus": "live"})
+db.roles.insert({"userID": 8, "userRole": "werewolf", "imgUrl": "http://langrensha.com/imgs/heros/langren.png","userSide": "bad", "userStatus": "live"})
 db.roles.insert({"userID": 2, "userRole": "seer", "imgUrl": "http://langrensha.com/imgs/heros/yuyanjia.png", "userSide": "good", "userStatus": "live"})
 db.roles.insert({"userID": 3, "userRole": "witch", "imgUrl": "http://langrensha.com/imgs/heros/nvwu.png", "userSide": "good", "userStatus": "live"})
 db.roles.insert({"userID": 4, "userRole": "hunter", "imgUrl": "http://langrensha.com/imgs/heros/lieren.png", "userSide": "good", "userStatus": "live"})
 db.roles.insert({"userID": 5, "userRole": "guard", "imgUrl": "http://langrensha.com/imgs/heros/shouwei.png", "userSide": "good", "userStatus": "live"})
+db.roles.insert({"userID": 12, "userRole": "idot", "imgUrl": "http://langrensha.com/imgs/heros/baichi.png", "userSide": "good", "userStatus": "live"})

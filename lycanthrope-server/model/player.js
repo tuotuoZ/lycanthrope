@@ -6,7 +6,8 @@ var player = new Schema({
     userRole: String,
     userSide: String,
     userStatus: {type: String, default: "live"},
-    userGuard: {type: Boolean, default: false}
+    userGuard: {type: Boolean, default: false},
+    userAntidote: {type: Boolean, default: false}
   }, {collection: 'game'}
 );
 

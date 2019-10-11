@@ -87,7 +87,8 @@ app.post('/player/kill', function(req, res) {
 
 // Revive one player(user), if the player is killed by werewolf.
 app.post('/player/revive', function(req, res) {
-    Role.update({"userID": req.body.userID}, {"userStatus": "live"}, function(err) {
+  console.log(req.body);
+    Player.update({"userID": req.body.userID}, {"userStatus": "live"}, function(err) {
         if (err) {
             res.status(500).send({error:"Cound not update the user status!"});
         } else {

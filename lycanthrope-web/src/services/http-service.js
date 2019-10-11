@@ -35,6 +35,94 @@ class HttpService {
       return promise;
 
     }
+
+    guardOnePlayer = (targetID) => {
+      var guardBody = JSON.stringify({ "userID" : targetID});
+      var promise = new Promise((resolve, reject) => {
+          fetch('http://10.0.0.46:3004/player/guard',{
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: 'post',
+            body: guardBody
+          })
+          .then(response => {
+
+              resolve(response.json());
+          })
+      });
+
+      return promise;
+
+    }
+
+    killOnePlayer = (targetID) => {
+      var killBody = JSON.stringify({ "userID" : targetID});
+      var promise = new Promise((resolve, reject) => {
+          fetch('http://10.0.0.46:3004/player/kill',{
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: 'post',
+            body: killBody
+          })
+          .then(response => {
+
+              resolve(response.json());
+          })
+      });
+
+      return promise;
+
+    }
+
+    reviveOnePlayer = (targetID) => {
+      var reviveBody = JSON.stringify({ "userID" : targetID});
+      var promise = new Promise((resolve, reject) => {
+          fetch('http://10.0.0.46:3004/player/revive',{
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: 'post',
+            body: reviveBody
+          })
+          .then(response => {
+
+              resolve(response.json());
+          })
+      });
+
+      return promise;
+
+    }
+
+    createPlayer = (playerID, roleModel) => {
+      var playerProfile = JSON.stringify({ "userID" : playerID,
+                                      "userRole" : roleModel.userRole,
+                                      "userSide" : roleModel.userSide});
+      console.log(playerProfile);
+      var promise = new Promise((resolve, reject) => {
+          fetch('http://10.0.0.46:3004/addPlayer',{
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: 'put',
+            body: playerProfile
+          })
+          .then(response => {
+
+              resolve(response.json());
+          })
+      });
+
+      return promise;
+
+    }
+
 }
 
 export default HttpService;
