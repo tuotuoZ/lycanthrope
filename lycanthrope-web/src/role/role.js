@@ -24,7 +24,6 @@ class Role extends Component {
       }, err =>{
 
       });
-
   }
 
   render() {

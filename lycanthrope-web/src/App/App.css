@@ -24,3 +24,7 @@
 .App-main {
   padding-top: 35px;
 }
+
+.machineId {
+  display: none;
+}

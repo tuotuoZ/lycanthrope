@@ -9,13 +9,35 @@ class HttpService {
                 resolve(response.json());
             })
         });
-        console.log(promise);
+
         return promise;
 
     }
 
     findPlayerSide = (targetID) => {
       var findBody = JSON.stringify({ "userID" : targetID});
+      console.log(findBody);
+      var promise = new Promise((resolve, reject) => {
+          fetch('http://10.0.0.46:3004/player/find',{
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: 'post',
+            body: findBody
+          })
+          .then(response => {
+
+              resolve(response.json());
+          })
+      });
+
+      return promise;
+
+    }
+
+    findPlayer = (UUID) => {
+      var findBody = JSON.stringify({ "userUniqueID" : UUID});
       console.log(findBody);
       var promise = new Promise((resolve, reject) => {
           fetch('http://10.0.0.46:3004/player/find',{
@@ -100,7 +122,10 @@ class HttpService {
     }
 
     createPlayer = (playerID, roleModel) => {
-      var playerProfile = JSON.stringify({ "userID" : playerID,
+      console.log(roleModel);
+      var playerProfile = JSON.stringify({
+                                      "userUniqueID":roleModel.UUID,
+                                      "userID" : playerID,
                                       "userRole" : roleModel.userRole,
                                       "userSide" : roleModel.userSide});
       console.log(playerProfile);

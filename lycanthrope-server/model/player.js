@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var player = new Schema({
+    userUniqueID: String,
     userID: Number,
     userRole: String,
     userSide: String,
