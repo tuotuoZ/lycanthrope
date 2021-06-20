@@ -10,7 +10,10 @@ Lycanthrope is a web application that helps small group of people who want to pl
 
 
 ### How to use
-TBD
+
+1. npm install in web and server folders
+2. node server.js in the server folder
+3. npm start in the web folder
 
 
 ### Technical issue
